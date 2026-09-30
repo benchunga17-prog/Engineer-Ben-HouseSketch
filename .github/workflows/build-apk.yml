@@ -29,14 +29,25 @@ jobs:
           gradle-version: '8.7'
         
 
-      - name: Build APK
-        run: |
-          cd Engineer-Ben-HouseSketch
-          gradle assembleDebug
+      - name: Extract Android project
+  run: |
+    unzip -q Engineer_Ben_HouseSketch_Android_v1.1.0.zip -d android-project
+    echo "PROJECT_DIR=$(dirname "$(find android-project -type f \( -name settings.gradle -o -name settings.gradle.kts \) -print -quit)")" >> "$GITHUB_ENV"
+
+- name: Build APK
+  run: |
+    gradle -p "$PROJECT_DIR" assembleDeb- name: Extract Android project
+  run: |
+    unzip -q Engineer_Ben_HouseSketch_Android_v1.1.0.zip -d android-project
+    echo "PROJECT_DIR=$(dirname "$(find android-project -type f \( -name settings.gradle -o -name settings.gradle.kts \) -print -quit)")" >> "$GITHUB_ENV"
+
+- name: Build APK
+  run: |
+    gradle -p "$PROJECT_DIR" assembleDebug
       
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: Engineer_Ben_HouseSketch
-          path: Engineer-Ben-HouseSketch/app/build/outputs/apk/debug/*.apk
+          path: ${{ env.PROJECT_DIR }}/app/build/outputs/apk/debug/*.apk
