@@ -21,25 +21,28 @@ jobs:
           java-version: '17'
 
       - name: Set up Android SDK
-        uses: android-actions/setup-android@v4
+        uses: android-actions/setup-android@v3
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.7'
-        
 
       - name: Extract Android project
-      run: |
-        unzip -q Engineer_Ben_HouseSketch_Android_*.zip -d android-project
-        echo "PROJECT_DIR=$(dirname "$(find android-project -type f \( -name settings.gradle -o -name settings.gradle.kts \) -print -quit)")" >> "$GITHUB_ENV"
+        run: |
+          ZIP_FILE=$(find . -maxdepth 1 -name "*.zip" -print -quit)
+          mkdir -p extracted
+          unzip -q "$ZIP_FILE" -d extracted
+          PROJECT_DIR=$(dirname "$(find extracted -name settings.gradle -o -name settings.gradle.kts | head -1)")
+          echo "PROJECT_DIR=$PROJECT_DIR" >> "$GITHUB_ENV"
+          echo "Project directory: $PROJECT_DIR"
 
-         - name: Build APK
-      run: |
-        gradle -p "$PROJECT_DIR" assembleDebug
+      - name: Build APK
+        run: |
+          gradle -p "$PROJECT_DIR" assembleDebug
 
-        - name: Upload APK
-      uses: actions/upload-artifact@v4
-      with:
-        name: Engineer_Ben_HouseSketch
-        path: ${{ env.PROJECT_DIR }}/app/build/outputs/apk/debug/*.apk
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: Engineer_Ben_HouseSketch
+          path: ${{ env.PROJECT_DIR }}/app/build/outputs/apk/debug/*.apk
