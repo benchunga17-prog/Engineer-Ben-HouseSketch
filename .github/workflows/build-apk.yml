@@ -29,22 +29,20 @@ jobs:
           gradle-version: '8.7'
         
 
-      - name: Extract Android project
-  run: |
-    unzip -q Engineer_Ben_HouseSketch_Android_v1.1.0.zip -d android-project
-    echo "PROJECT_DIR=$(dirname "$(find android-project -type f \( -name settings.gradle -o -name settings.gradle.kts \) -print -quit)")" >> "$GITHUB_ENV"
+    - name: Extract Android project
+    run: |
+     unzip -q Engineer_Ben_HouseSketch_Android_v1.1.0.zip -d android-project
+     echo "PROJECT_DIR=$(dirname "$(find android-project -type f \( -name settings.gradle -o -name settings.gradle.kts \) -print -quit)")" >> "$GITHUB_ENV"
 
-- name: Build APK
-  run: |
-    gradle -p "$PROJECT_DIR" assembleDeb- name: Extract Android project
-  run: |
-    unzip -q Engineer_Ben_HouseSketch_Android_v1.1.0.zip -d android-project
-    echo "PROJECT_DIR=$(dirname "$(find android-project -type f \( -name settings.gradle -o -name settings.gradle.kts \) -print -quit)")" >> "$GITHUB_ENV"
 
-- name: Build APK
-  run: |
-    gradle -p "$PROJECT_DIR" assembleDebug
-      
+     - name: Extract Android project
+      run: |
+        unzip -q Engineer_Ben_HouseSketch_Android_*.zip -d android-project
+        echo "PROJECT_DIR=$(dirname "$(find android-project -type f \( -name settings.gradle -o -name settings.gradle.kts \) -print -quit)")" >> "$GITHUB_ENV"
+
+     - name: Build APK
+      run: |
+        gradle -p "$PROJECT_DIR" assembleDebug     
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
