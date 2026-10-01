@@ -37,8 +37,8 @@ jobs:
           echo "PROJECT_DIR=$PROJECT_DIR" >> "$GITHUB_ENV"
           echo "Project directory: $PROJECT_DIR"
       
-                - name: List Android source files
-       run: |
+      - name: List Android source files
+        run: |
           echo "PROJECT_DIR=$PROJECT_DIR"
           echo "=== SOURCE FILES ==="
           find "$PROJECT_DIR/app/src" -type f -print | sort
@@ -51,7 +51,7 @@ jobs:
       - name: Build APK
         run: |
           gradle -p "$PROJECT_DIR" assembleDebug
-        uses: actions/upload-artifact@v4
-        with:
+          uses: actions/upload-artifact@v4
+          with:
           name: Engineer_Ben_HouseSketch
           path: ${{ env.PROJECT_DIR }}/app/build/outputs/apk/debug/*.apk
