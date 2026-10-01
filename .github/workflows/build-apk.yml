@@ -37,8 +37,12 @@ jobs:
           echo "PROJECT_DIR=$PROJECT_DIR" >> "$GITHUB_ENV"
           echo "Project directory: $PROJECT_DIR"
       
-      - name: List Android source files
+          - name: List Android source files
+      - name: Show drawing code
         run: |
+          echo "=== INDEX.HTML ==="
+          sed -n '1,260p' "$PROJECT_DIR/app/src/main/assets/index.html"
+          run: |
           echo "PROJECT_DIR=$PROJECT_DIR"
           echo "=== SOURCE FILES ==="
           find "$PROJECT_DIR/app/src" -type f -print | sort
