@@ -38,7 +38,7 @@ jobs:
           echo "Project directory: $PROJECT_DIR"
       
                 - name: List Android source files
-         run: |
+       run: |
           echo "PROJECT_DIR=$PROJECT_DIR"
           echo "=== SOURCE FILES ==="
           find "$PROJECT_DIR/app/src" -type f -print | sort
