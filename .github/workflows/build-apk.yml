@@ -36,8 +36,13 @@ jobs:
           PROJECT_DIR=$(dirname "$(find extracted -name settings.gradle -o -name settings.gradle.kts | head -1)")
           echo "PROJECT_DIR=$PROJECT_DIR" >> "$GITHUB_ENV"
           echo "Project directory: $PROJECT_DIR"
+      
       - name: List Android source files
         run: |
+          echo "PROJECT_DIR=$PROJECT_DIR"
+          echo "=== SOURCE FILES ==="
+          find "$PROJECT_DIR/app/src" -type f -print | sort
+          run: |
           echo "PROJECT_DIR=$PROJECT_DIR"
           echo "=== SOURCE FILES ==="
           find "$PROJECT_DIR/app/src" -type f -print | sort
