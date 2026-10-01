@@ -33,7 +33,7 @@ jobs:
           ZIP_FILE=$(find . -maxdepth 1 -name "*.zip" -print -quit)
           mkdir -p extracted
           unzip -q "$ZIP_FILE" -d extracted
-          PROJECT_DIR=$(dirname "$(find extracted -name settings.gradle -o -name settings.gradle.kts | head -1)")
+          PROJECT_DIR=$(dirname "$(find extracted -name settings.gradle -o -name settings.gradle.kts | head -n 1)")
           echo "PROJECT_DIR=$PROJECT_DIR" >> "$GITHUB_ENV"
           echo "Project directory: $PROJECT_DIR"
       
